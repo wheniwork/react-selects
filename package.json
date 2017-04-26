@@ -1,5 +1,5 @@
 {
-  "name": "react-selects",
+  "name": "@wheniwork/react-selects",
   "version": "1.0.0",
   "description": "A fork of react-select with support for option groups in es6",
   "main": "lib/Select.js",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wheniwork/react-selects.git"
+    "url": "git+https://github.com/wheniwork/react-selects.git"
   },
   "jest": {
     "modulePaths": [
@@ -97,5 +97,13 @@
     "react-component",
     "select",
     "ui"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/wheniwork/react-selects/issues"
+  },
+  "homepage": "https://github.com/wheniwork/react-selects#readme",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  }
 }
