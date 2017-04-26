@@ -37,10 +37,10 @@ npm install react-select-plus --save
 At this point you can import react-select and its styles in your application as follows:
 
 ```js
-import Select from 'react-select-plus';
+import Select from react-selects;
 
 // Be sure to include styles at some point, probably during your bootstrapping
-import 'react-select-plus/dist/react-select-plus.css';
+import react-selects;
 ```
 
 You can also use the standalone build by including `react-select-plus.js` and `react-select-plus.css` in your page. (If you do this though you'll also need to include the dependencies.) For example:

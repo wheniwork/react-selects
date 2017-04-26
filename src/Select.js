@@ -3,14 +3,12 @@
  Licensed under the MIT License (MIT), see
  http://jedwatson.github.io/react-select
  */
-
+import '../scss/default.scss';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import AutosizeInput from 'react-input-autosize';
 import classNames from 'classnames';
-
-import PropTypes from 'prop-types';
-
 
 import defaultArrowRenderer from './utils/defaultArrowRenderer';
 import defaultFilterOptions from './utils/defaultFilterOptions';
@@ -24,6 +22,7 @@ import Dropdown from './Dropdown';
 import Option from './Option';
 import OptionGroup from './OptionGroup';
 import Value from './Value';
+
 
 function clone(obj) {
 	const copy = {};
