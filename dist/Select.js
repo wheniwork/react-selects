@@ -4011,39 +4011,7 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-var propTypes = {
-	autoload: PropTypes.bool.isRequired, // automatically call the `loadOptions` prop on-mount; defaults to true
-	cache: PropTypes.any, // object to use to cache results; set to null/false to disable caching
-	children: PropTypes.func.isRequired, // Child function responsible for creating the inner Select component; (props: Object): PropTypes.element
-	ignoreAccents: PropTypes.bool, // strip diacritics when filtering; defaults to true
-	ignoreCase: PropTypes.bool, // perform case-insensitive filtering; defaults to true
-	loadingPlaceholder: PropTypes.oneOfType([// replaces the placeholder while options are loading
-	PropTypes.string, PropTypes.node]),
-	loadOptions: PropTypes.func.isRequired, // callback to load options asynchronously; (inputValue: string, callback: Function): ?Promise
-	multi: PropTypes.bool, // multi-value input
-	options: PropTypes.array.isRequired, // array of options
-	placeholder: PropTypes.oneOfType([// field placeholder, displayed when there's no value (shared with Select)
-	PropTypes.string, PropTypes.node]),
-	noResultsText: PropTypes.oneOfType([// field noResultsText, displayed when no options come back from the server
-	PropTypes.string, PropTypes.node]),
-	onChange: PropTypes.func, // onChange handler: function (newValue) {}
-	searchPromptText: PropTypes.oneOfType([// label to prompt for search input
-	PropTypes.string, PropTypes.node]),
-	onInputChange: PropTypes.func, // optional for keeping track of what is being typed
-	value: PropTypes.any };
-
 var defaultCache = {};
-
-var defaultProps = {
-	autoload: true,
-	cache: defaultCache,
-	children: defaultChildren,
-	ignoreAccents: true,
-	ignoreCase: true,
-	loadingPlaceholder: 'Loading...',
-	options: [],
-	searchPromptText: 'Type to search'
-};
 
 var Async = function (_Component) {
 	inherits(Async, _Component);
@@ -4239,9 +4207,36 @@ var Async = function (_Component) {
 	return Async;
 }(React.Component);
 
-Async.propTypes = propTypes;
-Async.defaultProps = defaultProps;
-
+Async.propTypes = {
+	autoload: PropTypes.bool.isRequired, // automatically call the `loadOptions` prop on-mount; defaults to true
+	cache: PropTypes.any, // object to use to cache results; set to null/false to disable caching
+	children: PropTypes.func.isRequired, // Child function responsible for creating the inner Select component; (props: Object): PropTypes.element
+	ignoreAccents: PropTypes.bool, // strip diacritics when filtering; defaults to true
+	ignoreCase: PropTypes.bool, // perform case-insensitive filtering; defaults to true
+	loadingPlaceholder: PropTypes.oneOfType([// replaces the placeholder while options are loading
+	PropTypes.string, PropTypes.node]),
+	loadOptions: PropTypes.func.isRequired, // callback to load options asynchronously; (inputValue: string, callback: Function): ?Promise
+	multi: PropTypes.bool, // multi-value input
+	options: PropTypes.array.isRequired, // array of options
+	placeholder: PropTypes.oneOfType([// field placeholder, displayed when there's no value (shared with Select)
+	PropTypes.string, PropTypes.node]),
+	noResultsText: PropTypes.oneOfType([// field noResultsText, displayed when no options come back from the server
+	PropTypes.string, PropTypes.node]),
+	onChange: PropTypes.func, // onChange handler: function (newValue) {}
+	searchPromptText: PropTypes.oneOfType([// label to prompt for search input
+	PropTypes.string, PropTypes.node]),
+	onInputChange: PropTypes.func, // optional for keeping track of what is being typed
+	value: PropTypes.any };
+Async.defaultProps = {
+	autoload: true,
+	cache: defaultCache,
+	children: defaultChildren,
+	ignoreAccents: true,
+	ignoreCase: true,
+	loadingPlaceholder: 'Loading...',
+	options: [],
+	searchPromptText: 'Type to search'
+};
 function defaultChildren(props) {
 	return React__default.createElement(Select, props);
 }
@@ -4256,8 +4251,8 @@ function reduce(obj) {
 	}, props);
 }
 
-var AsyncCreatable = function (_React$Component) {
-	inherits(AsyncCreatable, _React$Component);
+var AsyncCreatable = function (_Component) {
+	inherits(AsyncCreatable, _Component);
 
 	function AsyncCreatable() {
 		var _ref;
@@ -4306,12 +4301,12 @@ var AsyncCreatable = function (_React$Component) {
 		}
 	}]);
 	return AsyncCreatable;
-}(React__default.Component);
+}(React.Component);
 
 AsyncCreatable.displayName = 'AsyncCreatableSelect';
 
-var Creatable = function (_React$Component) {
-	inherits(Creatable, _React$Component);
+var Creatable = function (_Component) {
+	inherits(Creatable, _Component);
 
 	function Creatable() {
 		var _ref;
@@ -4493,7 +4488,7 @@ var Creatable = function (_React$Component) {
 		}
 	}]);
 	return Creatable;
-}(React__default.Component);
+}(React.Component);
 
 Creatable.displayName = 'CreatableSelect';
 Creatable.propTypes = {
@@ -4607,30 +4602,30 @@ function shouldKeyDownEventCreateNewOption(_ref7) {
 	return false;
 }
 
-var Dropdown = function (_React$Component) {
-  inherits(Dropdown, _React$Component);
+var Dropdown = function (_Component) {
+	inherits(Dropdown, _Component);
 
-  function Dropdown() {
-    classCallCheck(this, Dropdown);
-    return possibleConstructorReturn(this, (Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).apply(this, arguments));
-  }
+	function Dropdown() {
+		classCallCheck(this, Dropdown);
+		return possibleConstructorReturn(this, (Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).apply(this, arguments));
+	}
 
-  createClass(Dropdown, [{
-    key: 'render',
-    value: function render() {
-      // This component adds no markup
-      return this.props.children;
-    }
-  }]);
-  return Dropdown;
-}(React__default.Component);
+	createClass(Dropdown, [{
+		key: 'render',
+		value: function render() {
+			// This component adds no markup
+			return this.props.children;
+		}
+	}]);
+	return Dropdown;
+}(React.Component);
 
 Dropdown.propTypes = {
-  children: PropTypes.node
+	children: PropTypes.node
 };
 
-var Option = function (_React$Component) {
-	inherits(Option, _React$Component);
+var Option = function (_Component) {
+	inherits(Option, _Component);
 
 	function Option() {
 		var _ref;
@@ -4715,7 +4710,7 @@ var Option = function (_React$Component) {
 		}
 	}]);
 	return Option;
-}(React__default.Component);
+}(React.Component);
 
 Option.propTypes = {
 	children: PropTypes.node,
@@ -4730,8 +4725,8 @@ Option.propTypes = {
 	option: PropTypes.object.isRequired, // object that is base for that option
 	optionIndex: PropTypes.number };
 
-var OptionGroup = function (_React$Component) {
-	inherits(OptionGroup, _React$Component);
+var OptionGroup = function (_Component) {
+	inherits(OptionGroup, _Component);
 
 	function OptionGroup() {
 		var _ref;
@@ -4807,7 +4802,7 @@ var OptionGroup = function (_React$Component) {
 		}
 	}]);
 	return OptionGroup;
-}(React__default.Component);
+}(React.Component);
 
 OptionGroup.propTypes = {
 	children: PropTypes.any,
@@ -4815,8 +4810,8 @@ OptionGroup.propTypes = {
 	label: PropTypes.node, // the heading to show above the child options
 	option: PropTypes.object.isRequired };
 
-var Value = function (_React$Component) {
-	inherits(Value, _React$Component);
+var Value = function (_Component) {
+	inherits(Value, _Component);
 
 	function Value() {
 		var _ref;
@@ -4874,7 +4869,8 @@ var Value = function (_React$Component) {
 			var className = 'Select-value-label';
 			return _this.props.onClick || _this.props.value.href ? React__default.createElement(
 				'a',
-				{ className: className, href: _this.props.value.href, target: _this.props.value.target, onMouseDown: _this.handleMouseDown, onTouchEnd: _this.handleMouseDown },
+				{ className: className, href: _this.props.value.href, target: _this.props.value.target,
+					onMouseDown: _this.handleMouseDown, onTouchEnd: _this.handleMouseDown },
 				_this.props.children
 			) : React__default.createElement(
 				'span',
@@ -4899,7 +4895,7 @@ var Value = function (_React$Component) {
 		}
 	}]);
 	return Value;
-}(React__default.Component);
+}(React.Component);
 
 Value.displayName = 'Value';
 Value.propTypes = {

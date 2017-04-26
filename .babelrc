@@ -1,17 +1,10 @@
 {
   "presets": [
-	[
-	  "latest",
-	  {
-		"es2015": {
-		  "modules": false
-		}
-	  }
-	],
+	"es2015",
 	"stage-0",
 	"react"
   ],
-  "plugins": [
-	"external-helpers"
+  "ignore": [
+	"*.scss"
   ]
 }

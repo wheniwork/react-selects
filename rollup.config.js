@@ -20,10 +20,26 @@ export default {
 			output: 'dist/Select.css',
 			processor: css => postcss([autoprefixer])
 					.process(css)
-					.then(result => result.css)
+					.then(result => result.css),
 		}),
 		commonjs(),
 		babel({
+			babelrc: false,
+			presets: [
+				[
+					'latest',
+					{
+						'es2015': {
+							'modules': false,
+						},
+					},
+				],
+				'stage-0',
+				'react',
+			],
+			plugins: [
+				'external-helpers',
+			],
 			exclude: 'node_modules/**' // only transpile our source code
 		}),
 	],

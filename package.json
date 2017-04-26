@@ -21,7 +21,11 @@
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/testHelpers/fileMock.js",
+      "^.+\\.(css|scss)$": "<rootDir>/testHelpers/styleMock.js"
+    }
   },
   "dependencies": {
     "babel-plugin-external-helpers": "^6.22.0",
@@ -47,9 +51,10 @@
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^6.10.3",
     "gulp": "^3.9.1",
+    "ignore-styles": "^5.0.1",
     "isomorphic-fetch": "^2.2.1",
     "istanbul": "^0.4.5",
-    "jsdom": "^10.0.0",
+    "jsdom": "^9.0.0",
     "mocha": "^3.0.2",
     "postcss": "^5.2.17",
     "react": "^15.0",
@@ -81,7 +86,7 @@
     "cover": "istanbul cover _mocha -- -u exports --compilers js:babel/register -R spec",
     "coveralls": "NODE_ENV=test istanbul cover _mocha --report lcovonly -- -u exports --compilers js:babel-register -R spec && cat coverage/lcov.info | coveralls",
     "lint": "eslint .",
-    "test": " mocha --compilers js:babel-register"
+    "test": " mocha --compilers js:babel-register --require ignore-styles"
   },
   "keywords": [
     "combobox",

@@ -1,4 +1,4 @@
-### Thanks for using react-select!
+### Thanks for using react-selects!
 
 If you are reporting an error please include a test case that demonstrates the issue you're reporting!
 This is very helpful to maintainers in order to help us see the issue you're seeing.
