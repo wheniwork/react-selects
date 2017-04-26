@@ -1,4 +1,4 @@
-React-Select-Plus
+React-Selects
 
 A Select control for [React](http://facebook.github.io/react/index.html) based on [JedWatson/React-Select](https://github.com/JedWatson/react-select/).
 
