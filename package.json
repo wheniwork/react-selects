@@ -1,7 +1,7 @@
 {
   "name": "react-select-plus",
-  "version": "1.0.0-rc.3.patch4",
-  "description": "A fork of react-select with support for option groups",
+  "version": "1.0.0",
+  "description": "A fork of react-select with support for option groups in es6",
   "main": "lib/Select.js",
   "style": "dist/react-select-plus.min.css",
   "author": "When I Work",
