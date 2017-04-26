@@ -5,71 +5,71 @@
 // included first, then React thinks there's a DOM, so the other tests
 // (e.g. Select-test.js) that do require a DOM work correctly
 
-var jsdomHelper = require('../testHelpers/jsdomHelper');
+import jsdomHelper from '../testHelpers/jsdomHelper';
 jsdomHelper();
-var unexpected = require('unexpected');
-var unexpectedReact = require('unexpected-react');
-var unexpectedSinon = require('unexpected-sinon');
-var expect = unexpected
-	.clone()
-	.installPlugin(unexpectedReact)
-	.installPlugin(unexpectedSinon);
+import unexpected from 'unexpected';
+import unexpectedReact from 'unexpected-react';
+import unexpectedSinon from 'unexpected-sinon';
+let expect = unexpected
+		.clone()
+		.installPlugin(unexpectedReact)
+		.installPlugin(unexpectedSinon);
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react-addons-test-utils');
-var sinon = require('sinon');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
+import sinon from 'sinon';
 
-var Select = require('../src/Select');
+import Select from '../src/Select';
 
 describe('Async', () => {
 	let asyncInstance, asyncNode, filterInputNode, loadOptions;
 
-	function createControl (props = {}) {
+	function createControl(props = {}) {
 		loadOptions = props.loadOptions || sinon.stub();
 		asyncInstance = TestUtils.renderIntoDocument(
-			<Select.Async
-				autoload={false}
-				openOnFocus
-				{...props}
-				loadOptions={loadOptions}
-			/>
+				<Select.Async
+						autoload={false}
+						openOnFocus
+						{...props}
+						loadOptions={loadOptions}
+				/>,
 		);
 		asyncNode = ReactDOM.findDOMNode(asyncInstance);
 		findAndFocusInputControl();
 	};
 
-	function createOptionsResponse (options) {
+	function createOptionsResponse(options) {
 		return {
 			options: options.map((option) => ({
 				label: option,
-				value: option
-			}))
-	  };
+				value: option,
+			})),
+		};
 	}
 
-	function findAndFocusInputControl () {
+	function findAndFocusInputControl() {
 		filterInputNode = asyncNode.querySelector('input');
 		if (filterInputNode) {
 			TestUtils.Simulate.focus(filterInputNode);
 		}
 	};
 
-	function typeSearchText (text) {
+	function typeSearchText(text) {
 		TestUtils.Simulate.change(filterInputNode, { target: { value: text } });
 	};
 
 	describe('autoload', () => {
 		it('false does not call loadOptions on-mount', () => {
 			createControl({
-				autoload: false
+				autoload: false,
 			});
 			expect(loadOptions, 'was not called');
 		});
 
 		it('true calls loadOptions on-mount', () => {
 			createControl({
-				autoload: true
+				autoload: true,
 			});
 			expect(loadOptions, 'was called');
 		});
@@ -92,7 +92,7 @@ describe('Async', () => {
 
 		it('can be disabled by passing null/false', () => {
 			createControl({
-				cache: false
+				cache: false,
 			});
 			typeSearchText('a');
 			return expect(loadOptions, 'was called times', 1);
@@ -107,8 +107,8 @@ describe('Async', () => {
 		it('can be customized', () => {
 			createControl({
 				cache: {
-					a: []
-				}
+					a: [],
+				},
 			});
 			typeSearchText('a');
 			return expect(loadOptions, 'was called times', 0);
@@ -137,10 +137,12 @@ describe('Async', () => {
 		});
 
 		it('shows the loadingPlaceholder text while options are being fetched', () => {
-			function loadOptions (input, callback) {}
+			function loadOptions(input, callback) {
+			}
+
 			createControl({
 				loadOptions,
-				loadingPlaceholder: 'Loading'
+				loadingPlaceholder: 'Loading',
 			});
 			typeSearchText('te');
 			return expect(asyncNode.textContent, 'to contain', 'Loading');
@@ -148,12 +150,13 @@ describe('Async', () => {
 
 		describe('with callbacks', () => {
 			it('should display the loaded options', () => {
-				function loadOptions (input, resolve) {
+				function loadOptions(input, resolve) {
 					resolve(null, createOptionsResponse(['foo']));
 				}
+
 				createControl({
 					cache: false,
-					loadOptions
+					loadOptions,
 				});
 				expect(asyncNode.querySelectorAll('[role=option]').length, 'to equal', 0);
 				typeSearchText('foo');
@@ -163,12 +166,14 @@ describe('Async', () => {
 
 			it('should display the most recently-requested loaded options (if results are returned out of order)', () => {
 				const callbacks = [];
-				function loadOptions (input, callback) {
-				  callbacks.push(callback);
+
+				function loadOptions(input, callback) {
+					callbacks.push(callback);
 				}
+
 				createControl({
 					cache: false,
-					loadOptions
+					loadOptions,
 				});
 				typeSearchText('foo');
 				typeSearchText('bar');
@@ -180,13 +185,14 @@ describe('Async', () => {
 			});
 
 			it('should handle an error by setting options to an empty array', () => {
-				function loadOptions (input, resolve) {
+				function loadOptions(input, resolve) {
 					resolve(new Error('error'));
 				}
+
 				createControl({
 					cache: false,
 					loadOptions,
-					options: createOptionsResponse(['foo']).options
+					options: createOptionsResponse(['foo']).options,
 				});
 				expect(asyncNode.querySelectorAll('[role=option]').length, 'to equal', 1);
 				typeSearchText('bar');
@@ -197,28 +203,30 @@ describe('Async', () => {
 		describe('with promises', () => {
 			it('should display the loaded options', () => {
 				let promise;
-				function loadOptions (input) {
+
+				function loadOptions(input) {
 					promise = expect.promise((resolve, reject) => {
 						resolve(createOptionsResponse(['foo']));
 					});
 					return promise;
 				}
+
 				createControl({
 					autoload: false,
 					cache: false,
-					loadOptions
+					loadOptions,
 				});
 				expect(asyncNode.querySelectorAll('[role=option]').length, 'to equal', 0);
 				typeSearchText('foo');
 				return expect.promise.all([promise])
-					.then(() => expect(asyncNode.querySelectorAll('[role=option]').length, 'to equal', 1))
-					.then(() => expect(asyncNode.querySelector('[role=option]').textContent, 'to equal', 'foo'));
+						.then(() => expect(asyncNode.querySelectorAll('[role=option]').length, 'to equal', 1))
+						.then(() => expect(asyncNode.querySelector('[role=option]').textContent, 'to equal', 'foo'));
 			});
 
 			it('should display the most recently-requested loaded options (if results are returned out of order)', () => {
 				createControl({
 					autoload: false,
-					cache: false
+					cache: false,
 				});
 				let resolveFoo, resolveBar;
 				const promiseFoo = expect.promise((resolve, reject) => {
@@ -235,29 +243,31 @@ describe('Async', () => {
 				resolveBar(createOptionsResponse(['bar']));
 				resolveFoo(createOptionsResponse(['foo']));
 				return expect.promise.all([promiseFoo, promiseBar])
-					.then(() => expect(asyncNode.querySelectorAll('[role=option]').length, 'to equal', 1))
-					.then(() => expect(asyncNode.querySelector('[role=option]').textContent, 'to equal', 'bar'));
+						.then(() => expect(asyncNode.querySelectorAll('[role=option]').length, 'to equal', 1))
+						.then(() => expect(asyncNode.querySelector('[role=option]').textContent, 'to equal', 'bar'));
 			});
 
 			it('should handle an error by setting options to an empty array', () => {
 				let promise, rejectPromise;
-				function loadOptions (input, resolve) {
+
+				function loadOptions(input, resolve) {
 					promise = expect.promise((resolve, reject) => {
 						rejectPromise = reject;
 					});
 					return promise;
 				}
+
 				createControl({
 					autoload: false,
 					cache: false,
 					loadOptions,
-					options: createOptionsResponse(['foo']).options
+					options: createOptionsResponse(['foo']).options,
 				});
 				expect(asyncNode.querySelectorAll('[role=option]').length, 'to equal', 1);
 				typeSearchText('bar');
 				rejectPromise(new Error('error'));
 				return expect.promise.all([promise])
-					.catch(() => expect(asyncNode.querySelectorAll('[role=option]').length, 'to equal', 0));
+						.catch(() => expect(asyncNode.querySelectorAll('[role=option]').length, 'to equal', 0));
 			});
 		});
 	});
@@ -266,7 +276,7 @@ describe('Async', () => {
 		it('calls loadOptions with unchanged text', () => {
 			createControl({
 				ignoreAccents: true,
-				ignoreCase: false
+				ignoreCase: false,
 			});
 			typeSearchText('TeSt');
 			expect(loadOptions, 'was called with', 'TeSt');
@@ -275,7 +285,7 @@ describe('Async', () => {
 		it('strips accents before calling loadOptions when enabled', () => {
 			createControl({
 				ignoreAccents: true,
-				ignoreCase: false
+				ignoreCase: false,
 			});
 			typeSearchText('Gedünstmaßig');
 			// This should really be Gedunstmassig: ß -> ss
@@ -285,7 +295,7 @@ describe('Async', () => {
 		it('does not strip accents before calling loadOptions when diabled', () => {
 			createControl({
 				ignoreAccents: false,
-				ignoreCase: false
+				ignoreCase: false,
 			});
 			typeSearchText('Gedünstmaßig');
 			expect(loadOptions, 'was called with', 'Gedünstmaßig');
@@ -296,7 +306,7 @@ describe('Async', () => {
 		it('converts everything to lowercase when enabled', () => {
 			createControl({
 				ignoreAccents: false,
-				ignoreCase: true
+				ignoreCase: true,
 			});
 			typeSearchText('TeSt');
 			expect(loadOptions, 'was called with', 'test');
@@ -305,7 +315,7 @@ describe('Async', () => {
 		it('converts accents to lowercase when enabled', () => {
 			createControl({
 				ignoreAccents: false,
-				ignoreCase: true
+				ignoreCase: true,
 			});
 			typeSearchText('WÄRE');
 			expect(loadOptions, 'was called with', 'wäre');
@@ -314,7 +324,7 @@ describe('Async', () => {
 		it('does not convert text to lowercase when disabled', () => {
 			createControl({
 				ignoreAccents: false,
-				ignoreCase: false
+				ignoreCase: false,
 			});
 			typeSearchText('WÄRE');
 			expect(loadOptions, 'was called with', 'WÄRE');
@@ -325,7 +335,7 @@ describe('Async', () => {
 		it('converts everything to lowercase', () => {
 			createControl({
 				ignoreAccents: true,
-				ignoreCase: true
+				ignoreCase: true,
 			});
 			typeSearchText('TeSt');
 			expect(loadOptions, 'was called with', 'test');
@@ -334,7 +344,7 @@ describe('Async', () => {
 		it('removes accents and converts to lowercase', () => {
 			createControl({
 				ignoreAccents: true,
-				ignoreCase: true
+				ignoreCase: true,
 			});
 			typeSearchText('WÄRE');
 			expect(loadOptions, 'was called with', 'ware');
@@ -387,11 +397,11 @@ describe('Async', () => {
 				beforeEach((cb) => {
 					createControl({
 						searchPromptText: 'searchPromptText',
-						loadingPlaceholder: 'loadingPlaceholder'
+						loadingPlaceholder: 'loadingPlaceholder',
 					});
 					asyncInstance.setState({
 						isLoading: false,
-						inputValue: 'asdfkljhadsf'
+						inputValue: 'asdfkljhadsf',
 					}, cb);
 				});
 				it('falls back to searchPromptText', () => {
@@ -410,9 +420,9 @@ describe('Async', () => {
 				children: (props) => {
 					childProps = props;
 					return (
-						<div>faux select</div>
+							<div>faux select</div>
 					);
-				}
+				},
 			});
 			expect(asyncNode.textContent, 'to equal', 'faux select');
 			expect(childProps.isLoading, 'to equal', true);

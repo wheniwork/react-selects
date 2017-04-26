@@ -1,13 +1,15 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
-const Dropdown = React.createClass({
-  propTypes: {
-    children: React.PropTypes.node,
-  },
-  render () {
+class Dropdown extends React.Component {
+  static propTypes = {
+    children: PropTypes.node,
+  };
+
+  render() {
     // This component adds no markup
     return this.props.children;
   }
-});
+}
 
-module.exports = Dropdown;
+export default  Dropdown;

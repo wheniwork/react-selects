@@ -16,7 +16,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var TestUtils = require('react-addons-test-utils');
 var sinon = require('sinon');
-var Select = require('../src/Select');
+import Select from '../src/Select';
 
 describe('AsyncCreatable', () => {
 	let creatableInstance, creatableNode, filterInputNode, loadOptions, renderer;
